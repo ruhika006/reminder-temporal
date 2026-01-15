@@ -9,16 +9,6 @@ A simple drink water reminder application built with Temporal. It demonstrates w
 - **Worker**: Registers and executes workflows and activities from the task queue.
 - **Client**: Starts the workflow with a configurable delay (in seconds).
 
-## Temporal Architecture
-
-Temporal provides **durable execution** and **orchestration** for distributed systems:
-
-- **Server**: The Temporal service stores workflow execution history and task queues.
-- **Task Queue**: A named queue (e.g., "my-task-queue") where workflow and activity tasks are queued. Workers poll this queue for work.
-- **Workflow**: A sequence of steps (activities, timers, etc.) that can be paused, replayed, and retried. State is persisted on the server.
-- **Activity**: A unit of work (I/O, API call, computation) executed by workers. Activities can fail and be retried automatically.
-- **Worker**: A process that registers workflows and activities, polls the task queue, executes tasks, and reports results back to the server.
-- **History**: Every decision and activity result is recorded. If a worker crashes, Temporal replays the history and resumes from where it left off.
 
 ## How to Run
 
