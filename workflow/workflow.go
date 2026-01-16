@@ -23,9 +23,10 @@ func DrinkWaterReminderWorkflow(ctx workflow.Context, message string, delay time
 	if err!=nil{
 		log.Fatalln("unable to sleep", err)
 	}
-	err = workflow.ExecuteActivity(ctx, activity.Sendreminder, message).Get(ctx, nil )
+	var result string
+	err = workflow.ExecuteActivity(ctx, activity.Sendreminder, message).Get(ctx, &result )
 	if err!=nil{
 		log.Fatalln(err)
 	}
-	return "Reminder sent", nil
+	return result, nil
 }
