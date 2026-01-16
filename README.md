@@ -1,6 +1,6 @@
 # Reminder Temporal
 
-A simple drink water reminder application built with Temporal. It demonstrates workflow orchestration with activity execution, allowing you to schedule reminders with a configurable delay.
+A simple drink water slack channel reminder application built with Temporal. It demonstrates workflow orchestration with activity execution, allowing you to schedule reminders with a configurable delay.
 
 ## How it Works
 
@@ -9,6 +9,9 @@ A simple drink water reminder application built with Temporal. It demonstrates w
 - **Worker**: Registers and executes workflows and activities from the task queue.
 - **Client**: Starts the workflow with a configurable delay (in seconds).
 
+## Prerequisite:
+- Create a Slack incoming webhook for your desired channel
+- Add the webhook URL to `.env` as `SLACK_WEBHOOK_URL=<your-url>`
 
 ## How to Run
 
@@ -22,10 +25,10 @@ A simple drink water reminder application built with Temporal. It demonstrates w
    go run ./worker/worker.go
    ```
 
-3. Execute the workflow (in another terminal):
+3. Execute the workflow and all files(notification.go) (in another terminal):
    ```bash
-   go run main.go <delay_in_seconds>
+   go run . 2 <delay_in_seconds>
    ```
-   Example: `go run main.go 5` will wait 5 seconds before triggering the reminder.
+   Example: `go run . 5` will wait 5 seconds before triggering the reminder.
 
-Output: Time to drink Water!!!
+Slack channel message: Reminder: Time to drink Water!!!
