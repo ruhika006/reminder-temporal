@@ -10,9 +10,8 @@ import (
 )
 
 
-func DrinkWaterReminderWorkflow(ctx workflow.Context, message string, delay time.Duration) (string, error){
+func DrinkWaterReminderWorkflow(ctx workflow.Context, url string, message string, delay time.Duration) (string, error){
 
-	
 	ao := workflow.ActivityOptions{
 		StartToCloseTimeout: time.Minute,
 	}
@@ -23,10 +22,9 @@ func DrinkWaterReminderWorkflow(ctx workflow.Context, message string, delay time
 	if err!=nil{
 		log.Fatalln("unable to sleep", err)
 	}
-	var result string
-	err = workflow.ExecuteActivity(ctx, activity.Sendreminder, message).Get(ctx, &result )
+	err = workflow.ExecuteActivity(ctx, activity.Sendreminder, url, message).Get(ctx, nil)
 	if err!=nil{
-		log.Fatalln(err)
+		return "", err
 	}
-	return result, nil
+	return "Slack message sent successfully", nil
 }

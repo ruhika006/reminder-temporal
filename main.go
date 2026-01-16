@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -36,7 +37,13 @@ func main() {
 	}
 	delay := time.Duration(delaySeconds) * time.Second
 
-	wo, err := c.ExecuteWorkflow(context.Background(), options, workflow.DrinkWaterReminderWorkflow, "Time to drink Water!!!", delay)
+	// Slack
+	url := os.Getenv("SLACK_WEBHOOK_URL")
+	if url == "" {
+		log.Fatalln("SLACK_WEBHOOK_URL environment variable not set")
+	}
+
+	wo, err := c.ExecuteWorkflow(context.Background(), options, workflow.DrinkWaterReminderWorkflow, url, "Time to drink Water!!!", delay)
 	if err != nil {
 		log.Fatalln("error while executing workflow: ", err)
 	}
@@ -47,13 +54,6 @@ func main() {
 	if err != nil {
 		log.Fatalln("unable to get workflow result", err)
 	}
-
-
-	// Send notification to Slack
-	url := os.Getenv("SLACK_WEBHOOK_URL")
-	if url == "" {
-		log.Fatalln("SLACK_WEBHOOK_URL environment variable not set")
-	}
-
-	Notification(url, result)
+	
+	fmt.Println(result)
 }
